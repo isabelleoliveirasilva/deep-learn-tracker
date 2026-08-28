@@ -33,7 +33,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
   STUDY_METHODS,
   createSubject,
@@ -423,5 +422,3 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
     </Dialog>
   );
 }
-
-export const cnHelper = cn;
