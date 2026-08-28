@@ -14,7 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      study_sessions: {
+        Row: {
+          created_at: string
+          duration_minutes: number
+          id: string
+          made_review: boolean
+          made_summary: boolean
+          notes: string | null
+          practice_type: string
+          questions_correct: number | null
+          questions_total: number | null
+          session_date: string
+          study_method: string | null
+          study_method_other: string | null
+          subject_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration_minutes: number
+          id?: string
+          made_review?: boolean
+          made_summary?: boolean
+          notes?: string | null
+          practice_type?: string
+          questions_correct?: number | null
+          questions_total?: number | null
+          session_date: string
+          study_method?: string | null
+          study_method_other?: string | null
+          subject_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          made_review?: boolean
+          made_summary?: boolean
+          notes?: string | null
+          practice_type?: string
+          questions_correct?: number | null
+          questions_total?: number | null
+          session_date?: string
+          study_method?: string | null
+          study_method_other?: string | null
+          subject_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_sessions_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subjects: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: string
+          name: string
+          user_id: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          user_id?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
