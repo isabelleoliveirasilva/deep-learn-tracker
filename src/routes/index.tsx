@@ -68,7 +68,7 @@ function isoMinusDays(days: number) {
 
 function weekStart(dateStr: string) {
   const [y, m, d] = dateStr.split("-").map(Number);
-  const date = new Date(y, m - 1, d);
+  const date = new Date(y ?? 1970, (m ?? 1) - 1, d ?? 1);
   date.setDate(date.getDate() - date.getDay());
   return date.toISOString().slice(0, 10);
 }
@@ -98,8 +98,9 @@ function Dashboard() {
   const chartData = useMemo(() => {
     if (filtered.length === 0) return [];
     const dates = filtered.map((s) => s.session_date).sort();
-    const spanDays =
-      (new Date(dates[dates.length - 1]).getTime() - new Date(dates[0]).getTime()) / 86400000;
+    const first = dates[0] ?? "";
+    const last = dates[dates.length - 1] ?? "";
+    const spanDays = (new Date(last).getTime() - new Date(first).getTime()) / 86400000;
     const groupByWeek = range === "all" ? spanDays > 60 : Number(range) > 60;
 
     const map = new Map<string, number>();
@@ -145,7 +146,7 @@ function Dashboard() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline" asChild>
-            <Link to="/frequencia">
+            <Link to="/frequencia" search={{ materia: undefined }}>
               <BookOpen className="size-4" />
               Frequência por matéria
             </Link>
@@ -158,7 +159,7 @@ function Dashboard() {
       </header>
 
       <Card className="mb-6">
-        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
+        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4 space-y-0">
           <div>
             <CardTitle>Frequência de estudo</CardTitle>
             <CardDescription>

@@ -39,7 +39,7 @@ import {
 
 export const Route = createFileRoute("/frequencia")({
   validateSearch: (search: Record<string, unknown>) => ({
-    materia: typeof search.materia === "string" ? search.materia : undefined,
+    materia: typeof search["materia"] === "string" ? (search["materia"] as string) : undefined,
   }),
   head: () => ({
     meta: [
@@ -60,7 +60,8 @@ export const Route = createFileRoute("/frequencia")({
 });
 
 function FrequencyPage() {
-  const { materia } = Route.useSearch();
+  const search = Route.useSearch();
+  const materia = search["materia"];
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);

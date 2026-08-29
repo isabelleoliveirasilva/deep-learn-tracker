@@ -73,7 +73,7 @@ export function formatDuration(minutes: number): string {
 
 export function formatDate(dateStr: string): string {
   const [y, m, d] = dateStr.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("pt-BR");
+  return new Date(y ?? 1970, (m ?? 1) - 1, d ?? 1).toLocaleDateString("pt-BR");
 }
 
 export function todayISO(): string {
@@ -109,7 +109,7 @@ export async function createSubject(rawName: string, existingCount: number): Pro
 
   const { data, error } = await supabase
     .from("subjects")
-    .insert({ name, color: PALETTE[existingCount % PALETTE.length] })
+    .insert({ name, color: PALETTE[existingCount % PALETTE.length] ?? null })
     .select()
     .single();
   if (error) throw error;
