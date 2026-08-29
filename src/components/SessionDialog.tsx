@@ -52,7 +52,14 @@ type Props = {
   defaultSubjectId?: string | null;
 };
 
-type Errors = Record<string, string>;
+type Errors = {
+  subject?: string;
+  date?: string;
+  duration?: string;
+  methodOther?: string;
+  total?: string;
+  correct?: string;
+};
 
 export function SessionDialog({ open, onOpenChange, subjects, session, defaultSubjectId }: Props) {
   const queryClient = useQueryClient();
