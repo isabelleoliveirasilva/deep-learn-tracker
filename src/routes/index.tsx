@@ -159,7 +159,7 @@ function Dashboard() {
       </header>
 
       <Card className="mb-6">
-        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
+        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4 space-y-0">
           <div>
             <CardTitle>Frequência de estudo</CardTitle>
             <CardDescription>
