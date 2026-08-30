@@ -37,7 +37,7 @@ import {
   type StudySession,
 } from "@/lib/study";
 
-export const Route = createFileRoute("/frequencia")({
+export const Route = createFileRoute("/_authenticated/frequencia")({
   validateSearch: (search: Record<string, unknown>) => ({
     materia: typeof search["materia"] === "string" ? (search["materia"] as string) : undefined,
   }),
@@ -117,7 +117,7 @@ function FrequencyPage() {
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
           <Button variant="ghost" size="sm" asChild className="-ml-2 mb-2">
-            <Link to="/">
+            <Link to="/dashboard">
               <ArrowLeft className="size-4" />
               Dashboard
             </Link>

@@ -34,7 +34,7 @@ import {
   type StudySession,
 } from "@/lib/study";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard de Estudos | Controle de Frequência" },
