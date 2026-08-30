@@ -9,68 +9,68 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as FrequenciaRouteImport } from './routes/frequencia'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedFrequenciaRouteImport } from './routes/_authenticated/frequencia'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FrequenciaRoute = FrequenciaRouteImport.update({
-  id: '/frequencia',
+const AuthenticatedFrequenciaRoute = AuthenticatedFrequenciaRouteImport.update({
+  id: '/_authenticated/frequencia',
   path: '/frequencia',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/frequencia': typeof FrequenciaRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/frequencia': typeof AuthenticatedFrequenciaRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/frequencia': typeof FrequenciaRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/frequencia': typeof AuthenticatedFrequenciaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/frequencia': typeof FrequenciaRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/frequencia': typeof AuthenticatedFrequenciaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/frequencia'
+  fullPaths: '/dashboard' | '/frequencia'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/frequencia'
-  id: '__root__' | '/' | '/frequencia'
+  to: '/dashboard' | '/frequencia'
+  id: '__root__' | '/_authenticated/dashboard' | '/_authenticated/frequencia'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  FrequenciaRoute: typeof FrequenciaRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFrequenciaRoute: typeof AuthenticatedFrequenciaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/frequencia': {
-      id: '/frequencia'
+    '/_authenticated/frequencia': {
+      id: '/_authenticated/frequencia'
       path: '/frequencia'
       fullPath: '/frequencia'
-      preLoaderRoute: typeof FrequenciaRouteImport
+      preLoaderRoute: typeof AuthenticatedFrequenciaRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  FrequenciaRoute: FrequenciaRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFrequenciaRoute: AuthenticatedFrequenciaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
