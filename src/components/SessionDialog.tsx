@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { Check, ChevronsUpDown, Plus, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+
+import { useSubscription } from "@/hooks/useSubscription";
+import { FREE_SESSION_LIMIT } from "@/lib/stripe.functions";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
