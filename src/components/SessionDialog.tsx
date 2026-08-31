@@ -202,6 +202,33 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
     };
   }
 
+  if (limitReached) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="size-5 text-primary" />
+              Limite do plano gratuito atingido
+            </DialogTitle>
+            <DialogDescription>
+              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo, o máximo do plano gratuito.
+              Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
+              Agora não
+            </Button>
+            <Button asChild onClick={() => onOpenChange(false)}>
+              <Link to="/pricing">Ver planos</Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
