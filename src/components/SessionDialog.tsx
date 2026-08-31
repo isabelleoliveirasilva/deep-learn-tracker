@@ -40,6 +40,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   STUDY_METHODS,
   createSubject,
+  fetchSessions,
   saveSession,
   todayISO,
   type PracticeType,
