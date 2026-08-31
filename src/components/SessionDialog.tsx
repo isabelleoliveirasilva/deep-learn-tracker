@@ -216,8 +216,8 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
               Limite mensal do plano gratuito atingido
             </DialogTitle>
             <DialogDescription>
-              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo, o máximo do plano gratuito.
-              Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
+              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo neste mês, o máximo do plano
+              gratuito. Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
