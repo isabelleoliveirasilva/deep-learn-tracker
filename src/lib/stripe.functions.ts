@@ -102,7 +102,7 @@ export const createCheckout = createServerFn({ method: "POST" })
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
-      ...(customer ? { customer: customer.id } : { customer_email: email }),
+      ...(customer ? { customer: customer.id } : email ? { customer_email: email } : {}),
       line_items: [{ price: PREMIUM_PRICE_ID, quantity: 1 }],
       success_url: `${data.origin}/dashboard?checkout=success`,
       cancel_url: `${data.origin}/pricing?checkout=cancelled`,
