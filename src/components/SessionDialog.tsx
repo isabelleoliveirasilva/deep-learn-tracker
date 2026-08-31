@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { Check, ChevronsUpDown, Plus, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+
+import { useSubscription } from "@/hooks/useSubscription";
+import { FREE_SESSION_LIMIT } from "@/lib/stripe.functions";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -36,6 +40,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   STUDY_METHODS,
   createSubject,
+  fetchSessions,
   saveSession,
   todayISO,
   type PracticeType,
@@ -63,6 +68,10 @@ type Errors = {
 
 export function SessionDialog({ open, onOpenChange, subjects, session, defaultSubjectId }: Props) {
   const queryClient = useQueryClient();
+  const { data: subscription } = useSubscription();
+  const { data: allSessions } = useQuery({ queryKey: ["sessions"], queryFn: fetchSessions });
+  const limitReached =
+    !session && !subscription?.subscribed && (allSessions?.length ?? 0) >= FREE_SESSION_LIMIT;
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [subjectOpen, setSubjectOpen] = useState(false);
   const [subjectSearch, setSubjectSearch] = useState("");
@@ -191,6 +200,33 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
       questions_correct: practice === "none" ? null : (correctNum as number),
       notes: notes.trim() || null,
     };
+  }
+
+  if (limitReached) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="size-5 text-primary" />
+              Limite do plano gratuito atingido
+            </DialogTitle>
+            <DialogDescription>
+              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo, o máximo do plano gratuito.
+              Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
+              Agora não
+            </Button>
+            <Button asChild onClick={() => onOpenChange(false)}>
+              <Link to="/pricing">Ver planos</Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (

@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { UpgradeButton } from "@/components/UpgradeButton";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -46,6 +47,7 @@ function AuthenticatedLayout() {
             {name ? (
               <span className="hidden text-sm text-muted-foreground sm:inline">Olá, {name}</span>
             ) : null}
+            <UpgradeButton />
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               <LogOut className="size-4" />
               Sair
