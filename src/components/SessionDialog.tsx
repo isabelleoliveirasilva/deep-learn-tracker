@@ -68,6 +68,10 @@ type Errors = {
 
 export function SessionDialog({ open, onOpenChange, subjects, session, defaultSubjectId }: Props) {
   const queryClient = useQueryClient();
+  const { data: subscription } = useSubscription();
+  const { data: allSessions } = useQuery({ queryKey: ["sessions"], queryFn: fetchSessions });
+  const limitReached =
+    !session && !subscription?.subscribed && (allSessions?.length ?? 0) >= FREE_SESSION_LIMIT;
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [subjectOpen, setSubjectOpen] = useState(false);
   const [subjectSearch, setSubjectSearch] = useState("");
