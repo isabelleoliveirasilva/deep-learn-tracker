@@ -70,8 +70,12 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
   const queryClient = useQueryClient();
   const { data: subscription } = useSubscription();
   const { data: allSessions } = useQuery({ queryKey: ["sessions"], queryFn: fetchSessions });
+  const currentMonth = todayISO().slice(0, 7);
+  const monthSessionCount = (allSessions ?? []).filter((s) =>
+    s.session_date.startsWith(currentMonth),
+  ).length;
   const limitReached =
-    !session && !subscription?.subscribed && (allSessions?.length ?? 0) >= FREE_SESSION_LIMIT;
+    !session && !subscription?.subscribed && monthSessionCount >= FREE_SESSION_LIMIT;
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [subjectOpen, setSubjectOpen] = useState(false);
   const [subjectSearch, setSubjectSearch] = useState("");
@@ -209,11 +213,11 @@ export function SessionDialog({ open, onOpenChange, subjects, session, defaultSu
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Sparkles className="size-5 text-primary" />
-              Limite do plano gratuito atingido
+              Limite mensal do plano gratuito atingido
             </DialogTitle>
             <DialogDescription>
-              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo, o máximo do plano gratuito.
-              Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
+              Você já registrou {FREE_SESSION_LIMIT} sessões de estudo neste mês, o máximo do plano
+              gratuito. Faça upgrade para o Diário Premium e cadastre sessões ilimitadas.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

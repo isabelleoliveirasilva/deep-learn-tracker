@@ -92,7 +92,7 @@ function PricingPage() {
           <CardContent className="space-y-4">
             <ul className="space-y-2 text-sm">
               {[
-                `Até ${FREE_SESSION_LIMIT} sessões de estudo`,
+                `Até ${FREE_SESSION_LIMIT} sessões de estudo por mês`,
                 "Dashboard com gráfico de frequência",
                 "Frequência por matéria",
               ].map((f) => (
