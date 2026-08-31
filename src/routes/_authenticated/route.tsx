@@ -46,6 +46,7 @@ function AuthenticatedLayout() {
             {name ? (
               <span className="hidden text-sm text-muted-foreground sm:inline">Olá, {name}</span>
             ) : null}
+            <UpgradeButton />
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               <LogOut className="size-4" />
               Sair
